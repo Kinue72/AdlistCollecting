@@ -1,0 +1,8 @@
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\bin\Debug\AdlistCollecting.exe
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\bin\Debug\AdlistCollecting.pdb
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\obj\Debug\AdlistCollecting.csprojAssemblyReference.cache
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\obj\Debug\AdlistCollecting.csproj.CoreCompileInputs.cache
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\obj\Debug\AdlistCollecting.exe
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\obj\Debug\AdlistCollecting.pdb
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\bin\Debug\adlist.txt
+C:\Users\Kinue\RiderProjects\AdlistCollecting\AdlistCollecting\bin\Debug\whitelist.txt
