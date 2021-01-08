@@ -50,25 +50,34 @@ namespace AdlistCollecting
 
         private static void Processing(string uri)
         {
-            Console.WriteLine($"[+] Processing: {uri}");
-            var request = (HttpWebRequest) WebRequest.Create(uri);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            request.UserAgent =
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66";
-            using var response = (HttpWebResponse) request.GetResponse();
-            using var stream = response.GetResponseStream();
-            if (stream == null) return;
-            using var reader = new StreamReader(stream);
-            string str;
-            while ((str = reader.ReadLine()) != null)
+            try
             {
-                // ignore comment & ipv6
-                if (str.StartsWith("#") || str.Contains(":")) continue;
-                str = Regex.Replace(str, "\\d+\\.\\d+\\.\\d+\\.\\d+", ""); //remove all ip address
-                str = string.Concat(str.Where(c => !char.IsWhiteSpace(c))); //remove all white space
-                if (_whitelist.Any(domain => string.Equals(str, domain, StringComparison.OrdinalIgnoreCase))) continue;
-                if (string.IsNullOrEmpty(str)) continue;
-                _domains.Add($"127.0.0.1 {str}");
+                Console.WriteLine($"[+] Processing: {uri}");
+                var request = (HttpWebRequest) WebRequest.Create(uri);
+                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                request.UserAgent =
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66";
+                using var response = (HttpWebResponse) request.GetResponse();
+                using var stream = response.GetResponseStream();
+                if (stream == null) return;
+                using var reader = new StreamReader(stream);
+                string str;
+                while ((str = reader.ReadLine()) != null)
+                {
+                    // ignore comment & ipv6
+                    if (str.StartsWith("#") || str.Contains(":")) continue;
+                    str = Regex.Replace(str, "\\d+\\.\\d+\\.\\d+\\.\\d+", ""); //remove all ip address
+                    //delete comment
+                    if (str.Contains("#") && str.Length > 1) str = str.Substring(0, str.IndexOf("#"));
+                    str = string.Concat(str.Where(c => !char.IsWhiteSpace(c))); //remove all white space
+                    if (_whitelist.Any(domain => string.Equals(str, domain, StringComparison.OrdinalIgnoreCase)))
+                        continue;
+                    if (string.IsNullOrEmpty(str)) continue;
+                    _domains.Add($"127.0.0.1 {str}");
+                }
+            }
+            catch {
+                Console.WriteLine($"An error occurred while processing '{uri}'!");
             }
         }
     }
